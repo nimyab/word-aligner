@@ -160,7 +160,7 @@ async def align_words(request: AlignmentRequest):
     except Exception as e:
         logger.error(f"Unexpected error: {e}")
         raise HTTPException(
-            status_code=500, detail="Internal server error while processing request"
+            status_code=500, detail=str(e)
         )
 
 

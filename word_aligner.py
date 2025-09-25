@@ -34,9 +34,13 @@ class WordAligner:
         """
         Tokenize text and return a list of (word, start, end)
         """
+        # return [
+        #     (m.group(), m.start(), m.end())
+        #     for m in re.finditer(r"\b\w+(?:[.'’]\w+)*\b([.,])*", text)
+        # ]
         return [
             (m.group(), m.start(), m.end())
-            for m in re.finditer(r"\b\w+(?:'\w+)?\b", text)
+            for m in re.finditer(r'\S+', text)
         ]
 
     def get_word_alignment(
