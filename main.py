@@ -125,10 +125,6 @@ async def align_words(request: AlignmentRequest):
         )
 
     try:
-        logger.info(f"Processing word alignment request")
-        logger.debug(f"Source text: {request.st}")
-        logger.debug(f"Target text: {request.tt}")
-
         # Get alignments
         alignments = aligner_instance.get_word_alignment(
             request.st, request.tt
@@ -151,13 +147,17 @@ async def align_words(request: AlignmentRequest):
             tt=request.tt,
         )
 
-        logger.info(f"Successfully processed {len(alignment_items)} alignments")
         return response
-
+    
     except ValueError as e:
+        logger.error(f"Source text: {request.st}")
+        logger.error(f"Target text: {request.tt}")
         logger.error(f"Validation error: {e}")
         raise HTTPException(status_code=400, detail=str(e))
+    
     except Exception as e:
+        logger.error(f"Source text: {request.st}")
+        logger.error(f"Target text: {request.tt}")
         logger.error(f"Unexpected error: {e}")
         raise HTTPException(
             status_code=500, detail=str(e)
